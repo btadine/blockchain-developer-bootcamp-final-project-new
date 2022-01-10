@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CityHacks is Ownable {
     uint256 totalHacks;
-
     uint256 private latestReportBlock;
     uint256 private reportedHacksCount;
 
