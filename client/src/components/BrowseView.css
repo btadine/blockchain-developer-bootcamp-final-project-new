@@ -1,0 +1,28 @@
+.tipButton {
+  border-radius: 15px;
+}
+
+.cityhackfield {
+  color: white;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.browserCont {
+  display: flex;
+  flex-direction: column;
+}
+
+.headerTitle {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.headerContainer {
+  padding-top: 50px;
+}

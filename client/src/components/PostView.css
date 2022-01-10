@@ -1,0 +1,54 @@
+.connectWalletButton {
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  border: 0;
+  border-radius: 5px;
+  justify-content: flex-end;
+}
+
+.networkDetector {
+  display: flex;
+  justify-content: center;
+}
+
+.connectWalletContainer {
+  border: 0;
+  border-radius: 5px;
+  padding-right: 10px;
+  justify-content: center;
+}
+
+.mainBannerContainer {
+display: flex;
+flex-direction: row;
+width: 100%;
+align-items: center;
+justify-content: flex-end;
+}
+
+.postView {
+  display: flex;
+  width: 100%;
+}
+
+.postHackContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+}
+
+.selectorsContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.connected {
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+  padding-left: 10px;
+}

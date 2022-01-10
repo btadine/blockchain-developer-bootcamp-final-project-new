@@ -1,0 +1,20 @@
+.descriptionBox {
+  padding-top: 25px;
+}
+
+.selectHolder {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.ant-input:placeholder-shown {
+  padding-bottom: 50px;
+}
+
+input[type='text'],
+textarea {
+  -webkit-appearance: none;
+  padding-bottom: 50px;
+}

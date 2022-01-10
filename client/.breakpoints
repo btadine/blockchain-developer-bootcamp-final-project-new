@@ -1,0 +1,20 @@
+{
+  "files": {
+    ".replit": [
+      {
+        "id": "7a001f48-ccd7-482f-b5e1-848a8ab5a3d6",
+        "line": 3,
+        "version": 1,
+        "index": 47
+      }
+    ],
+    "src/utils/waveportal.json": [
+      {
+        "id": "60d18c90-2773-43c2-9fc3-7ddd83c6bcf5",
+        "line": 33,
+        "version": 0,
+        "index": 4366
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+.tipButton {
+  border-radius: 15px;
+}
+
+.cityhackfield {
+  color: white;
+}
+
+.headerTitle {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.headerContainer {
+  padding-top: 50px;
+}
