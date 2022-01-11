@@ -41,6 +41,7 @@ const App = () => {
   const [connectionStatus, setConnectionStatus] = useState('Checking');
   const [statusLoading, setStatusLoading] = useState(true);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [noReportedHacks, setNoReportedHacks] = useState(false);
 
   const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
   const cities = [
@@ -293,12 +294,21 @@ const App = () => {
 
   const getAndSetReportedHacks = async (account) => {
     try {
+      setStatusLoading(true);
+      setConnectionStatus('Fetching');
       const reported = await getAllReportedHacks(account);
       console.log(reported);
       const hacks = allHacks.filter((a) => reported.includes(a.id));
       console.log(hacks);
+      if (hacks.length === 0) {
+        setNoReportedHacks(true);
+      }
       setReportedHacks(hacks);
+      setStatusLoading(false);
+      setConnectionStatus('Connected');
     } catch (error) {
+      setStatusLoading(false);
+      setConnectionStatus('Connected');
       console.log(error);
     }
   };
@@ -452,9 +462,6 @@ const App = () => {
       await hackTxn.wait();
       setStatusLoading(false);
       setConnectionStatus('Mined!');
-      setTimeout(3000);
-      setConnectionStatus('Connected');
-
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
@@ -551,6 +558,13 @@ const App = () => {
     }
     configWalletIsOwner(currentAccount);
   }, [currentAccount]);
+
+  useEffect(() => {
+    if (connectionStatus === 'Mined!') {
+      console.log(connectionStatus, 'hyy');
+      setTimeout(setConnectionStatus('Connected'), 3000);
+    }
+  }, [connectionStatus]);
 
   useEffect(() => {
     getAllHacks();
@@ -657,6 +671,7 @@ const App = () => {
           closePopup={closePopup}
           isOwner={walletIsOwner}
           account={currentAccount}
+          noReportedHacks={noReportedHacks}
         />
       </Menu>
       <PostHackPopup
@@ -675,7 +690,7 @@ const App = () => {
         handleHide={handleHide}
       />
       <div className="banner">
-        <div className="whitehint">Tap on the menu to post a city hack.</div>
+        <div className="whitehint">Tap on the menu to post a hack.</div>
         <div className="leftSideContainer">
           <div className="whitehint-2">Status: {connectionStatus}</div>
           <Loader

@@ -116,6 +116,7 @@ const PostView = (props) => {
             >
               Post a hack
             </Button>
+            {props.noReportedHacks ? 'No reported Hacks' : ''}
           </div>
         </div>
       )}
