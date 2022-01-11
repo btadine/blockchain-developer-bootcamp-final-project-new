@@ -1,4 +1,5 @@
 require('dotenv').config();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 module.exports = {
   contracts_build_directory: 'client/src/utils',
@@ -9,8 +10,14 @@ module.exports = {
       network_id: '*', // Match any network id
     },
     ropsten: {
-      url: `https://eth-ropsten.alchemyapi.io/v2/${process.env.REACT_APP_ALCHEMY_KEY}`,
-      accounts: [`0x${process.env.ROPSTEN_PRIVATE_KEY}`],
+      provider: function () {
+        return new HDWalletProvider(
+          process.env.MNEMONIC,
+          process.env.ALCHEMY_PROJECT_ID
+        );
+      },
+      network_id: 3,
+      networkCheckTimeout: 1000000,
     },
   },
   compilers: {
