@@ -48,7 +48,7 @@ const App = () => {
     'Choose a city',
     'Barcelona',
     'Buenos Aires',
-    'Lisboa',
+    'Lisbon',
     'Madrid',
     'London',
     'Tokyo',
@@ -62,8 +62,8 @@ const App = () => {
 
   const categories = [
     'Choose a category',
-    'Cheap',
-    'Nice Spot',
+    'Cheap Places',
+    'Nice Spots',
     'Traditional',
     'Parking',
     'Coworking',
