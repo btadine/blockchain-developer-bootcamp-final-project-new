@@ -214,6 +214,9 @@ const App = () => {
         newProvider
       );
 
+      setStatusLoading(true);
+      setConnectionStatus('Fetching');
+
       const hacks = await cityHacksContract.getAllHacks();
 
       let hacksCleaned = [];
@@ -247,7 +250,11 @@ const App = () => {
       }
       const hacksSorted = hacksFiltered.sort((a, b) => b.upvotes - a.upvotes);
       setAllHacks(hacksSorted);
+      setStatusLoading(false);
+      setConnectionStatus('Connected');
     } catch (error) {
+      setStatusLoading(false);
+      setConnectionStatus('Connected');
       console.log(error);
     }
   };
