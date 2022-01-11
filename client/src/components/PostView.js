@@ -97,15 +97,19 @@ const PostView = (props) => {
       ) : (
         <div className="postHackContainer">
           <div className="connected">
-            {props.isOwner ? "You're Admin" : "You're connected"}
+            {props.isOwner ? 'Welcome, Admin' : 'Connected wallet:'}
+            <br></br>
+            {!props.isOwner && props.account ? `${props.account}` : ''}
           </div>
           <div className="connectWalletContainer">
-            <Button
-              className="connectWalletButton"
-              onClick={props.openReportedView}
-            >
-              Check Reported Hacks
-            </Button>
+            {props.isOwner && (
+              <Button
+                className="connectWalletButton"
+                onClick={props.openReportedView}
+              >
+                Check Reported Hacks
+              </Button>
+            )}
             <Button
               className="connectWalletButton"
               onClick={props.openPostView}

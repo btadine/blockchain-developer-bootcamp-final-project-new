@@ -10,7 +10,7 @@ const PostHackPopup = (props) => {
   const [textValue, setTextValue] = useState('');
   const [cityId, setCityId] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
-  const [loadingPost, setLoadingPost] = useState(false);
+  // const [loadingPost, setLoadingPost] = useState(false);
   const [postButtonTitle, setPostButtonTitle] = useState('Post');
 
   const cities = [
@@ -40,12 +40,13 @@ const PostHackPopup = (props) => {
   ];
 
   const postHack = async () => {
-    setLoadingPost(true);
-    setPostButtonTitle('Posting');
-    console.log(textValue, cityId, categoryId);
+    // setLoadingPost(true);
+    // setPostButtonTitle('Posting');
+    // console.log(textValue, cityId, categoryId);
+    closePopup();
     await props.postHack(textValue, cityId, categoryId);
-    setLoadingPost(false);
-    setPostButtonTitle('Success');
+    // setLoadingPost(false);
+    // setPostButtonTitle('Success');
     props.getAllHacks();
   };
 
@@ -54,17 +55,17 @@ const PostHackPopup = (props) => {
     setCityId(0);
     setCategoryId(0);
     props.closePopup();
-    setPostButtonTitle('Post');
+    //setPostButtonTitle('Post');
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!loadingPost) {
-        closePopup();
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [postButtonTitle]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (!loadingPost) {
+  //       closePopup();
+  //     }
+  //   }, 1000);
+  //   return () => clearTimeout(timer);
+  // }, [postButtonTitle]);
 
   return (
     <Modal
@@ -74,15 +75,10 @@ const PostHackPopup = (props) => {
       position="right center"
       onCancel={closePopup}
       footer={[
-        <Button key="back" disabled={loadingPost} onClick={closePopup}>
+        <Button key="back" onClick={closePopup}>
           Cancel
         </Button>,
-        <Button
-          key="submit"
-          type="primary"
-          loading={loadingPost}
-          onClick={postHack}
-        >
+        <Button key="submit" type="primary" onClick={postHack}>
           {postButtonTitle}
         </Button>,
       ]}
@@ -100,7 +96,6 @@ const PostHackPopup = (props) => {
                   style={{ margin: '0px' }}
                   value={cityId}
                   aria-label="Default select example"
-                  disabled={loadingPost}
                   onChange={(e) => setCityId(e)}
                 >
                   {cities.map((city, index) => {
@@ -117,7 +112,6 @@ const PostHackPopup = (props) => {
                   className="Select"
                   style={{ margin: '0px' }}
                   value={categoryId}
-                  disabled={loadingPost}
                   aria-label="Default select example"
                   onChange={(e) => setCategoryId(e)}
                 >
@@ -136,7 +130,6 @@ const PostHackPopup = (props) => {
                 label=""
               >
                 <Input
-                  disabled={loadingPost}
                   style={{
                     height: '76px',
                     minHeight: '76px',

@@ -12,6 +12,11 @@ import BrowseView from './components/BrowseView.js';
 import PostHackPopup from './components/PostHackPopup.js';
 import ReportedViewPopup from './components/ReportedViewPopup.js';
 
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import Loader from 'react-loader-spinner';
+
+import { slide as Menu } from 'react-burger-menu';
+
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
@@ -33,6 +38,9 @@ const App = () => {
   const [openPostPopup, setOpenPostPopup] = useState(false);
   const [openReportedView, setOpenReportedView] = useState(false);
   const [walletIsOwner, setWalletIsOwner] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState('Checking');
+  const [statusLoading, setStatusLoading] = useState(true);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
   const cities = [
@@ -357,6 +365,7 @@ const App = () => {
       // Mining, insert an animation to inform user.
 
       await reportHackTxn.wait();
+
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
@@ -423,6 +432,7 @@ const App = () => {
   const postHack = async (text, cityId, categoryId) => {
     try {
       //const provider = new ethers.providers.Web3Provider(connection);
+      setMenuIsOpen(false);
       const signer = provider.getSigner();
       const cityHacksContract = new ethers.Contract(
         contractAddress,
@@ -436,11 +446,20 @@ const App = () => {
         categoryId
       );
       // Mining, insert an animation to inform user.
+      setStatusLoading(true);
+      setConnectionStatus('Mining');
 
       await hackTxn.wait();
+      setStatusLoading(false);
+      setConnectionStatus('Mined!');
+      setTimeout(3000);
+      setConnectionStatus('Connected');
+
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
+      setConnectionStatus('Connected');
+      setStatusLoading(false);
       console.log(error);
     }
   };
@@ -526,6 +545,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    if (currentAccount !== '') {
+      setConnectionStatus('Connected');
+      setStatusLoading(false);
+    }
     configWalletIsOwner(currentAccount);
   }, [currentAccount]);
 
@@ -596,6 +619,11 @@ const App = () => {
               close();
             }}
           >
+                  {
+          <a onClick={this.showSettings} className="menu-item--small" href="">
+            Settings
+          </a>
+        }
             Close
           </button>
         </div>
@@ -606,6 +634,31 @@ const App = () => {
 
   return (
     <div className="fullPage">
+      <Menu
+        // onOpen={setMenuIsOpen(true)}
+        // onClose={setMenuIsOpen(false)}
+        noOverlay
+        isOpen={menuIsOpen}
+        onStateChange={(state) => setMenuIsOpen(state.isOpen)}
+      >
+        <PostView
+          metamask={window.ethereum !== undefined}
+          networkVersion={
+            window.ethereum !== undefined
+              ? window.ethereum.networkVersion
+              : 'none'
+          }
+          postHack={postHack}
+          getAllHacks={getAllHacks}
+          connectWallet={connectWallet}
+          accountNotFound={!currentAccount}
+          openPostView={openPopup}
+          openReportedView={openReported}
+          closePopup={closePopup}
+          isOwner={walletIsOwner}
+          account={currentAccount}
+        />
+      </Menu>
       <PostHackPopup
         destroyOnClose={true}
         visible={openPostPopup}
@@ -622,7 +675,18 @@ const App = () => {
         handleHide={handleHide}
       />
       <div className="banner">
-        <PostView
+        <div className="whitehint">Tap on the menu to post a city hack.</div>
+        <div className="leftSideContainer">
+          <div className="whitehint-2">Status: {connectionStatus}</div>
+          <Loader
+            className={statusLoading ? 'statusLoader' : 'statusLoaderHidden'}
+            type="Rings"
+            color="#00BFFF"
+            height={25}
+            width={25}
+          />
+        </div>
+        {/* <PostView
           metamask={window.ethereum !== undefined}
           networkVersion={
             window.ethereum !== undefined
@@ -637,7 +701,7 @@ const App = () => {
           openReportedView={openReported}
           closePopup={closePopup}
           isOwner={walletIsOwner}
-        />
+        /> */}
       </div>
       <div className="mainContainer">
         <Popup open={errorOcurred} onClose={resetError} position="right center">

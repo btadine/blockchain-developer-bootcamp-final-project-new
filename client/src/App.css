@@ -15,27 +15,29 @@
 }
 
 .headerTitle2 {
-    color: white;
-    justify-content: center;
-    display: flex;
-    padding-bottom: 10px;
-    margin-top: -20px;
+  color: white;
+  justify-content: center;
+  display: flex;
+  padding-bottom: 10px;
+  margin-top: -20px;
 }
 
 .headerTitle3 {
-      color: white;
-    padding-top: 15px;
+  color: white;
+  padding-top: 15px;
 }
 
 .banner {
-    top: 0px !important;
-    background-color: #323235;
-    z-index: 99;
-    position: fixed;
-    display: flex;
-    flex: 1;
-    width: 100%;
-    height: 50px;
+  justify-content: space-between;
+  flex-direction: row;
+  top: 0px !important;
+  background-color: #323235;
+  z-index: 99;
+  position: fixed;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-height: 50px;
 }
 
 .fullPage {
@@ -75,17 +77,17 @@
 }
 
 .poll {
-display: flex;
-flex-direction: column;
-align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
 }
 
 .inputGroup {
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    max-width: 600px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 600px;
 }
 
 .formControl {
@@ -94,10 +96,10 @@ align-self: flex-end;
 }
 
 .postButton {
-cursor: pointer;
-width:18%;  
-height: 40px;
-margin-left: 20px;
+  cursor: pointer;
+  width: 18%;
+  height: 40px;
+  margin-left: 20px;
 }
 
 .selectorsContainer {
@@ -122,19 +124,45 @@ margin-left: 20px;
 }
 
 .cityhack {
-display: flex;
-max-width: 100%;
+  display: flex;
+  max-width: 100%;
 }
 
 .cityhackfield {
-word-break: break-all;
+  word-break: break-all;
 }
 
 .actionsContainer {
-padding-top: 20px;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.whitehint {
+  padding: 10px;
+  color: white;
+}
+
+.whitehint-2 {
+  padding: 10px 2px 10px 10px;
+  color: white;
+  text-align: end;
+}
+
+.leftSideContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.statusLoader {
+  padding-top: 9px;
+  padding-right: 5px;
+}
+.statusLoaderHidden {
+  padding-top: 9px;
+  padding-right: 5px;
+  visibility: hidden;
 }
 
 .modal {
@@ -169,4 +197,75 @@ justify-content: space-between;
   background: #ffffff;
   border-radius: 18px;
   border: 1px solid #cfcece;
+}
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 70px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: #a90000;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+  top: 36px !important;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
+  padding-top: 36px;
+  z-index: 100 !important;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+  width: fit-content !important;
 }
