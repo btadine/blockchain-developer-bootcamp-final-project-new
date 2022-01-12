@@ -98,7 +98,11 @@ const PostView = (props) => {
       ) : (
         <div className="postHackContainer">
           <div className="connected">
-            {props.isOwner ? 'Welcome, Admin' : 'Connected wallet:'}
+            {props.networkVersion !== '3'
+              ? 'Invalid Network'
+              : props.isOwner
+              ? 'Welcome, Admin'
+              : 'Connected wallet:'}
             <br></br>
             {!props.isOwner && props.account ? `${props.account}` : ''}
           </div>
@@ -107,6 +111,7 @@ const PostView = (props) => {
               <Button
                 className="connectWalletButton"
                 onClick={props.openReportedView}
+                disabled={props.networkVersion !== '3'}
               >
                 Check Reported Hacks
               </Button>
@@ -114,6 +119,7 @@ const PostView = (props) => {
             <Button
               className="connectWalletButton"
               onClick={props.openPostView}
+              disabled={props.networkVersion !== '3'}
             >
               Post a hack
             </Button>

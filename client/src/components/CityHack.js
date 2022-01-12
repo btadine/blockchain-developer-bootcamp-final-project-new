@@ -43,6 +43,7 @@ const CityHack = (props) => {
             variant="outline-secondary"
             id="button-addon2"
             onClick={() => props.handleTip(props.hack.id)}
+            disabled={props.invalidNetwork}
           >
             Tip
           </Button>
@@ -51,6 +52,7 @@ const CityHack = (props) => {
             variant="outline-secondary"
             id="button-addon2"
             onClick={() => props.handleReport(props.hack.id)}
+            disabled={props.invalidNetwork}
           >
             Report
           </Button>
@@ -63,6 +65,7 @@ const CityHack = (props) => {
               hackIdsVotes={props.hackIdsVotes}
               hackIdsVoted={props.hackIdsVoted}
               disabledVotes={props.disabledVotes}
+              invalidNetwork={props.invalidNetwork}
             />
           </div>
         </div>
@@ -74,6 +77,7 @@ const CityHack = (props) => {
             variant="outline-secondary"
             id="button-addon2"
             onClick={() => props.handleUnReport(props.hack.id)}
+            disabled={props.invalidNetwork}
           >
             Unreport
           </Button>
@@ -82,6 +86,7 @@ const CityHack = (props) => {
             variant="outline-secondary"
             id="button-addon2"
             onClick={() => props.handleHide(props.hack.id)}
+            disabled={props.invalidNetwork}
           >
             Hide and Unreport
           </Button>

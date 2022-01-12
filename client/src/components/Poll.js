@@ -22,7 +22,9 @@ const Poll = (props) => {
           </Button>
         ) : (
           <Button
-            disabled={props.disabledVotes.includes(props.hackId)}
+            disabled={
+              props.invalidNetwork || props.disabledVotes.includes(props.hackId)
+            }
             className="voteButton"
             variant="outline-secondary"
             onClick={() => props.onVote(true, props.hackId)}
@@ -47,7 +49,9 @@ const Poll = (props) => {
           </Button>
         ) : (
           <Button
-            disabled={props.disabledVotes.includes(props.hackId)}
+            disabled={
+              props.invalidNetwork || props.disabledVotes.includes(props.hackId)
+            }
             className="voteButton"
             variant="outline-secondary"
             onClick={() => props.onVote(false, props.hackId)}

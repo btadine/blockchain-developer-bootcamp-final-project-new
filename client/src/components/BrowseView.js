@@ -176,6 +176,7 @@ const BrowseView = (props) => {
                   handleReport={props.handleReport}
                   handleTip={props.handleTip}
                   disabledVotes={props.disabledVotes}
+                  invalidNetwork={props.invalidNetwork}
                 />
               );
             })}

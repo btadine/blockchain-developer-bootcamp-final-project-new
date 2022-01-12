@@ -43,6 +43,7 @@ const App = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [noReportedHacks, setNoReportedHacks] = useState(false);
   const [disabledVotes, setDisabledVotes] = useState([]);
+  const [invalidNetwork, setInvalidNetwork] = useState(false);
 
   const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
   const cities = [
@@ -287,10 +288,10 @@ const App = () => {
       }
       setReportedHacks(hacks);
       setStatusLoading(false);
-      setConnectionStatus('Connected');
+      setConnectionBaseState();
     } catch (error) {
       setStatusLoading(false);
-      setConnectionStatus('Connected');
+      setConnectionBaseState();
       console.log(error);
     }
   };
@@ -363,8 +364,7 @@ const App = () => {
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
-      setConnectionStatus('Connected');
-      setStatusLoading(false);
+      setConnectionBaseState();
       console.log(error);
     }
   };
@@ -427,8 +427,7 @@ const App = () => {
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
-      setConnectionStatus('Connected');
-      setStatusLoading(false);
+      setConnectionBaseState();
       console.log(error);
     }
   };
@@ -459,8 +458,7 @@ const App = () => {
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
-      setConnectionStatus('Connected');
-      setStatusLoading(false);
+      setConnectionBaseState();
       console.log(error);
     }
   };
@@ -485,8 +483,7 @@ const App = () => {
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
-      setConnectionStatus('Connected');
-      setStatusLoading(false);
+      setConnectionBaseState();
       console.log(error);
     }
   };
@@ -515,8 +512,7 @@ const App = () => {
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
-      setConnectionStatus('Connected');
-      setStatusLoading(false);
+      setConnectionBaseState();
       console.log(error);
     }
   };
@@ -573,6 +569,20 @@ const App = () => {
     }
   };
 
+  const connectedToRopsten = () => {
+    return window.ethereum.networkVersion === '3';
+  };
+
+  const setConnectionBaseState = () => {
+    let conectionStatus = connectedToRopsten()
+      ? 'Connected'
+      : 'Switch to Ropsten Network';
+    setConnectionStatus(conectionStatus);
+    setStatusLoading(connectedToRopsten() ? false : true);
+    console.log('this', currentAccount && currentAccount.length === 0);
+    setInvalidNetwork(!currentAccount || !connectedToRopsten());
+  };
+
   useEffect(() => {
     window.ethereum.on('accountsChanged', handleAccountsChanged);
     // returned function will be called on component unmount
@@ -601,12 +611,12 @@ const App = () => {
 
   useEffect(() => {
     if (currentAccount && currentAccount.length > 0) {
-      setConnectionStatus('Connected');
-      setStatusLoading(false);
+      setConnectionBaseState();
       getAllHacks();
       fetchVotes();
     } else {
       setStatusToNewState('Not Connected');
+      setInvalidNetwork(!currentAccount || !connectedToRopsten());
       setStatusLoading(false);
       setDisabledVotes([]);
       setVotedHacks([]);
@@ -617,9 +627,8 @@ const App = () => {
   let timeOut;
 
   useEffect(() => {
-    console.log('Adri hola', connectionStatus);
     if (connectionStatus === 'Mined!') {
-      timeOut = setTimeout(() => setConnectionStatus('Connected'), 3000);
+      timeOut = setTimeout(() => setConnectionBaseState(), 3000);
     }
     return () => {
       clearTimeout(timeOut);
@@ -712,7 +721,11 @@ const App = () => {
       />
       <div className="banner">
         <div className="elementContainer">
-          {currentAccount && currentAccount.length > 0 ? (
+          {!connectedToRopsten() ? (
+            <div className="whitehint">
+              Switch your network to use Cityhacks.
+            </div>
+          ) : currentAccount && currentAccount.length > 0 ? (
             <div className="whitehint">Tap on the menu to post a hack.</div>
           ) : (
             <div className="whitehint">
@@ -791,6 +804,7 @@ const App = () => {
             votedHacks={votedHacks}
             setFilters={setFiltersAndReload}
             disabledVotes={disabledVotes}
+            invalidNetwork={invalidNetwork}
           />
         </div>
       </div>
