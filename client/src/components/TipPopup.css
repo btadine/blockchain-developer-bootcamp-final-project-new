@@ -1,0 +1,14 @@
+.rowContent {
+  display: flex;
+  flex-direction: row;
+}
+
+.amountTitle {
+  padding-top: 2px;
+  text-align: center;
+}
+
+.amountInput {
+  display: flex;
+  padding-left: 7px;
+}

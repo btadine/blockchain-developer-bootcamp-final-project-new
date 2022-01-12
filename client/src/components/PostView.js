@@ -83,6 +83,7 @@ const PostView = (props) => {
             <NetworkDetector
               metamask={props.metamask}
               networkVersion={props.networkVersion}
+              account={props.account}
             />
           </div>
           <div className="connectWalletContainer">
@@ -116,7 +117,9 @@ const PostView = (props) => {
             >
               Post a hack
             </Button>
-            {props.noReportedHacks ? 'No reported Hacks' : ''}
+            <div className="feedbackMessage">
+              {props.noReportedHacks ? 'No reported Hacks' : ''}
+            </div>
           </div>
         </div>
       )}

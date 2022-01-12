@@ -11,6 +11,7 @@ import PostView from './components/PostView.js';
 import BrowseView from './components/BrowseView.js';
 import PostHackPopup from './components/PostHackPopup.js';
 import ReportedViewPopup from './components/ReportedViewPopup.js';
+import TipPopup from './components/TipPopup.js';
 
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import Loader from 'react-loader-spinner';
@@ -31,7 +32,6 @@ const App = () => {
 
   const [errorOcurred, setErrorOcurred] = useState(false);
   const [tipHackPressed, setTipHackPressed] = useState(false);
-  const [tipValue, setTipValue] = useState('');
   const [hackId, setHackId] = useState(0);
   const [votedHacks, setVotedHacks] = useState([]);
   const [filters, setFilters] = useState({});
@@ -42,6 +42,7 @@ const App = () => {
   const [statusLoading, setStatusLoading] = useState(true);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [noReportedHacks, setNoReportedHacks] = useState(false);
+  const [disabledVotes, setDisabledVotes] = useState([]);
 
   const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
   const cities = [
@@ -113,32 +114,8 @@ const App = () => {
       if (web3Modal.cachedProvider) {
         connectWallet();
       }
-
-      //const accounts = await ethereum.request({ method: 'eth_accounts' });
-      //console.log(accounts.length);
-      //if (accounts.length !== 0) {
-      //const account = accounts[0];
-      /*Found an authorized account*/
-      //console.log("Setting account", account);
-      //setAccount(accounts[0]);
-      //const newProvider = new ethers.providers.Web3Provider(ethereum);
-      //console.log(newProvider);
-      //setProvider(newProvider);
-      //} else {
-      /*No authorized account found. Show error*/
-
-      //}
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const setAccount = (account) => {
-    console.log('Setting account', account);
-    if (this.setState !== undefined) {
-      this.setState({ currentAccount: account }, () => {
-        fetchVotes();
-      });
     }
   };
 
@@ -155,7 +132,7 @@ const App = () => {
       );
       const owner = await cityHacksContract.owner();
       console.log('Owner', owner, account);
-      setWalletIsOwner(owner == account);
+      setWalletIsOwner(owner.toLowerCase() == account.toLowerCase());
     } catch (error) {
       console.log(error);
     }
@@ -214,9 +191,6 @@ const App = () => {
         newProvider
       );
 
-      setStatusLoading(true);
-      setConnectionStatus('Fetching');
-
       const hacks = await cityHacksContract.getAllHacks();
 
       let hacksCleaned = [];
@@ -234,7 +208,10 @@ const App = () => {
           });
         }
       });
-
+      let disabledVotes = hacksCleaned
+        .filter((a) => a.address.toLowerCase() === currentAccount.toLowerCase())
+        .map((a) => a.id);
+      setDisabledVotes(disabledVotes);
       let hacksFiltered = [];
       if (filters.city && filters.category) {
         hacksFiltered = hacksCleaned.filter(
@@ -248,13 +225,11 @@ const App = () => {
         hacksFiltered = hacksCleaned;
         console.log('not found filters', hacksFiltered);
       }
-      const hacksSorted = hacksFiltered.sort((a, b) => b.upvotes - a.upvotes);
+      const hacksSorted = hacksFiltered.sort(
+        (a, b) => b.upvotes - b.downvotes - (a.upvotes - a.downvotes)
+      );
       setAllHacks(hacksSorted);
-      setStatusLoading(false);
-      setConnectionStatus('Connected');
     } catch (error) {
-      setStatusLoading(false);
-      setConnectionStatus('Connected');
       console.log(error);
     }
   };
@@ -354,7 +329,7 @@ const App = () => {
               : votes[index];
         }
       });
-
+      console.log('votedHacks', votes);
       setVotedHacks(votes);
     } catch (error) {
       console.log(error);
@@ -380,12 +355,16 @@ const App = () => {
         reported
       );
       // Mining, insert an animation to inform user.
-
+      setStatusLoading(true);
+      setConnectionStatus('Mining');
       await reportHackTxn.wait();
-
+      setStatusLoading(false);
+      setConnectionStatus('Mined!');
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
+      setConnectionStatus('Connected');
+      setStatusLoading(false);
       console.log(error);
     }
   };
@@ -408,8 +387,11 @@ const App = () => {
         reported
       );
       // Mining, insert an animation to inform user.
-
+      setStatusLoading(true);
+      setConnectionStatus('Mining');
       await hideHackTxn.wait();
+      setStatusLoading(false);
+      setConnectionStatus('Mined!');
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
@@ -437,11 +419,16 @@ const App = () => {
         reported
       );
       // Mining, insert an animation to inform user.
-
+      setStatusLoading(true);
+      setConnectionStatus('Mining');
       await reportHackTxn.wait();
+      setStatusLoading(false);
+      setConnectionStatus('Mined!');
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
+      setConnectionStatus('Connected');
+      setStatusLoading(false);
       console.log(error);
     }
   };
@@ -489,16 +476,22 @@ const App = () => {
       );
       const hackTxn = await cityHacksContract.voteHack(hackId, vote);
       // Mining, insert an animation to inform user.
+      setStatusLoading(true);
+      setConnectionStatus('Mining');
 
       await hackTxn.wait();
+      setStatusLoading(false);
+      setConnectionStatus('Mined!');
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
+      setConnectionStatus('Connected');
+      setStatusLoading(false);
       console.log(error);
     }
   };
 
-  const tipHacker = async () => {
+  const tipHacker = async (tipValue) => {
     setTipHackPressed(false);
     try {
       //const provider = new ethers.providers.Web3Provider(ethereum);
@@ -508,18 +501,29 @@ const App = () => {
         contractABI,
         signer
       );
-      let overrides = { value: ethers.utils.parseEther(tipValue) };
+      console.log(tipValue);
+      let overrides = { value: ethers.utils.parseEther(tipValue.toString()) };
 
       const hackTxn = await cityHacksContract.tipHacker(hackId, overrides);
       // Mining, insert an animation to inform user.
+      setStatusLoading(true);
+      setConnectionStatus('Mining');
 
       await hackTxn.wait();
+      setStatusLoading(false);
+      setConnectionStatus('Mined!');
       // Txn mined
     } catch (error) {
       setErrorOcurred(true);
-      console.log('tipHacker');
+      setConnectionStatus('Connected');
+      setStatusLoading(false);
       console.log(error);
     }
+  };
+
+  const setStatusToNewState = (newState, loading) => {
+    setConnectionStatus(newState);
+    setStatusLoading(loading);
   };
 
   const resetError = () => {
@@ -531,27 +535,64 @@ const App = () => {
     setTipHackPressed(true);
   };
 
+  const tipHack = (tipAmount) => {
+    console.log('tip hack called');
+    setTipHackPressed(false);
+    tipHacker(tipAmount);
+  };
+
   const handleReport = (hackId) => {
     reportHack(hackId);
   };
 
   const handleUnReport = (hackId) => {
+    setOpenReportedView(false);
     unreportHack(hackId);
   };
 
   const handleHide = async (hackId) => {
-    await hideCityHack(hackId);
     setOpenReportedView(false);
+    await hideCityHack(hackId);
     getAllHacks();
-  };
-
-  const setTip = (event) => {
-    setTipValue(event.target.value);
   };
 
   const fetchVotes = () => {
     getAllVotes(currentAccount);
   };
+
+  const handleAccountsChanged = async (accounts) => {
+    const account = accounts[0];
+    setCurrentAccount(account);
+    console.log('handleAccountsChanged', account);
+    configWalletIsOwner(account);
+    if (accounts.length === 0) {
+      const web3Modal = await getWeb3Modal();
+      //console.log(web3Modal);
+      web3Modal.clearCachedProvider();
+      setCurrentAccount('');
+    }
+  };
+
+  useEffect(() => {
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
+    // returned function will be called on component unmount
+    return () => {
+      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+    };
+  }, [window.ethereum]);
+
+  useEffect(() => {
+    window.ethereum.on('chainChanged', (chainId) => {
+      // Handle the new chain.
+      // Correctly handling chain changes can be complicated.
+      // We recommend reloading the page unless you have good reason not to.
+      window.location.reload();
+    });
+    // returned function will be called on component unmount
+    return () => {
+      window.ethereum.removeListener('chainChanged');
+    };
+  }, [window.ethereum]);
 
   useEffect(() => {
     getAllHacks();
@@ -559,19 +600,37 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (currentAccount !== '') {
+    if (currentAccount && currentAccount.length > 0) {
       setConnectionStatus('Connected');
       setStatusLoading(false);
+      getAllHacks();
+      fetchVotes();
+    } else {
+      setStatusToNewState('Not Connected');
+      setStatusLoading(false);
+      setDisabledVotes([]);
+      setVotedHacks([]);
     }
     configWalletIsOwner(currentAccount);
   }, [currentAccount]);
 
+  let timeOut;
+
   useEffect(() => {
+    console.log('Adri hola', connectionStatus);
     if (connectionStatus === 'Mined!') {
-      console.log(connectionStatus, 'hyy');
-      setTimeout(setConnectionStatus('Connected'), 3000);
+      timeOut = setTimeout(() => setConnectionStatus('Connected'), 3000);
     }
+    return () => {
+      clearTimeout(timeOut);
+    };
   }, [connectionStatus]);
+
+  // useEffect(() => {
+  //   if (shouldGoToPreviousState) {
+  //     setConnectionStatus(connectionPreviousState);
+  //   }
+  // }, [shouldGoToPreviousState]);
 
   useEffect(() => {
     getAllHacks();
@@ -605,59 +664,9 @@ const App = () => {
     setOpenReportedView(false);
   };
 
-  const fix = () => {
-    /*<Popup open={tipHackPressed}
-       onClose={() => setTipHackPressed(false)}
-       position="right center">
-       {close => (
-      <div className="modal">
-        <button className="close" onClick={close}>
-          &times;
-        </button>
-        <div className="header"> Tip cityhacker </div>
-        <div className="content">
-          {' '}
-          Add the tip amount.
-        </div>
-                  <InputGroup className="inputGroup">
-    <FormControl
-      className="formControl"
-      placeholder="Amount in ethers"
-      aria-label="Tip amount"
-      aria-describedby="basic-addon2"
-      onChange={setTip}
-      value={tipValue}
-    />
-        <Button className="postButton" variant="outline-secondary" id="button-addon2" onClick={tipHacker}>
-      Tip
-    </Button>
-        </InputGroup>
-        <div className="actions">
-          <button
-            className="button"
-            onClick={() => {
-              console.log('modal closed ');
-              close();
-            }}
-          >
-                  {
-          <a onClick={this.showSettings} className="menu-item--small" href="">
-            Settings
-          </a>
-        }
-            Close
-          </button>
-        </div>
-      </div>
-    )}
-  </Popup>*/
-  };
-
   return (
     <div className="fullPage">
       <Menu
-        // onOpen={setMenuIsOpen(true)}
-        // onClose={setMenuIsOpen(false)}
         noOverlay
         isOpen={menuIsOpen}
         onStateChange={(state) => setMenuIsOpen(state.isOpen)}
@@ -696,34 +705,37 @@ const App = () => {
         handleUnReport={handleUnReport}
         handleHide={handleHide}
       />
+      <TipPopup
+        visible={tipHackPressed}
+        closePopup={() => setTipHackPressed(false)}
+        tipHack={tipHack}
+      />
       <div className="banner">
-        <div className="whitehint">Tap on the menu to post a hack.</div>
-        <div className="leftSideContainer">
-          <div className="whitehint-2">Status: {connectionStatus}</div>
-          <Loader
-            className={statusLoading ? 'statusLoader' : 'statusLoaderHidden'}
-            type="Rings"
-            color="#00BFFF"
-            height={25}
-            width={25}
-          />
+        <div className="elementContainer">
+          {currentAccount && currentAccount.length > 0 ? (
+            <div className="whitehint">Tap on the menu to post a hack.</div>
+          ) : (
+            <div className="whitehint">
+              Tap on the menu to connect your wallet.
+            </div>
+          )}
         </div>
-        {/* <PostView
-          metamask={window.ethereum !== undefined}
-          networkVersion={
-            window.ethereum !== undefined
-              ? window.ethereum.networkVersion
-              : 'none'
-          }
-          postHack={postHack}
-          getAllHacks={getAllHacks}
-          connectWallet={connectWallet}
-          accountNotFound={!currentAccount}
-          openPostView={openPopup}
-          openReportedView={openReported}
-          closePopup={closePopup}
-          isOwner={walletIsOwner}
-        /> */}
+        <div className="elementContainer">
+          <div className="leftSideContainer">
+            <div className="statusTitle">Status:</div>
+            <div className="statusName">
+              <Loader
+                visible={statusLoading}
+                className="statusLoader"
+                type="Rings"
+                color="#00BFFF"
+                height={25}
+                width={25}
+              />
+              {connectionStatus}
+            </div>
+          </div>
+        </div>
       </div>
       <div className="mainContainer">
         <Popup open={errorOcurred} onClose={resetError} position="right center">
@@ -778,6 +790,7 @@ const App = () => {
             handleReport={handleReport}
             votedHacks={votedHacks}
             setFilters={setFiltersAndReload}
+            disabledVotes={disabledVotes}
           />
         </div>
       </div>

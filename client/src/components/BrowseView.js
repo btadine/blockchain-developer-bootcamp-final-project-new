@@ -55,7 +55,8 @@ const BrowseView = (props) => {
     setHackIdsVoted(props.votedHacks.map((votedHack) => votedHack.hackId));
     setHackIdsVotes(props.votedHacks.map((votedHack) => votedHack.vote));
     setHackCount(props.hacks ? props.hacks.length : 0);
-  }, [props]);
+    console.log('arriving', props.votedHacks);
+  }, [props.votedHacks]);
 
   useEffect(() => {
     console.log('Hacks arrived', filtering);
@@ -173,6 +174,8 @@ const BrowseView = (props) => {
                   hackIdsVotes={hackIdsVotes}
                   handleVote={handleVote}
                   handleReport={props.handleReport}
+                  handleTip={props.handleTip}
+                  disabledVotes={props.disabledVotes}
                 />
               );
             })}

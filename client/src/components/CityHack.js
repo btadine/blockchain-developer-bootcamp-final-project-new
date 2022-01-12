@@ -29,7 +29,12 @@ const CityHack = (props) => {
       </div>
       <div className="cityhackfield">
         <b>Address: </b>
-        {props.hack.address}
+        <a
+          href={'https://ropsten.etherscan.io/address/' + props.hack.address}
+          target="_blank"
+        >
+          {props.hack.address}
+        </a>
       </div>
       {!props.reportedView && (
         <div className="actionsContainer">
@@ -57,6 +62,7 @@ const CityHack = (props) => {
               downVotes={props.hack.downvotes}
               hackIdsVotes={props.hackIdsVotes}
               hackIdsVoted={props.hackIdsVoted}
+              disabledVotes={props.disabledVotes}
             />
           </div>
         </div>

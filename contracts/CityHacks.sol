@@ -39,7 +39,7 @@ contract CityHacks is Ownable {
 
     constructor() {}
 
-    function getLatestReportBlock() public view onlyOwner returns (uint256) {
+    function getLatestReportBlock() public view returns (uint256) {
         return latestReportBlock;
     }
 
@@ -64,6 +64,10 @@ contract CityHacks is Ownable {
 
     function hideHack(uint256 _hackId) public onlyOwner {
         hacks[_hackId].hidden = true;
+    }
+
+    function unHideHack(uint256 _hackId) public onlyOwner {
+        hacks[_hackId].hidden = false;
     }
 
     function postHack(string memory _description, uint256 _cityId, uint256 _categoryId) public {
