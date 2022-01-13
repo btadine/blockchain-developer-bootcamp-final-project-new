@@ -14,10 +14,12 @@ const NetworkDetector = (props) => {
 
   return (
     <div className="footer-text">
-      {props.metamask &&
-      props.networkVersion === expectedNetwork &&
-      props.account &&
-      props.account.length > 0
+      {!props.metamask
+        ? `We are working on supporting other wallet providers. At the moment, we encourage using Metamask.`
+        : props.metamask &&
+          props.networkVersion === expectedNetwork &&
+          props.account &&
+          props.account.length > 0
         ? `Post a hack (on ${NETWORKS[props.networkVersion]})`
         : props.networkVersion !== expectedNetwork
         ? `This only works on ${NETWORKS[3]}, please change your Network and refresh the page.`

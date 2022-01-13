@@ -570,7 +570,11 @@ const App = () => {
   };
 
   const connectedToRopsten = () => {
-    return window.ethereum.networkVersion === '3';
+    return window.ethereum && window.ethereum.networkVersion === '3';
+  };
+
+  const metamaskMissing = () => {
+    return window.ethereum === undefined;
   };
 
   const setConnectionBaseState = () => {
@@ -584,6 +588,9 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (!window.ethereum) {
+      return;
+    }
     window.ethereum.on('accountsChanged', handleAccountsChanged);
     // returned function will be called on component unmount
     return () => {
@@ -592,6 +599,9 @@ const App = () => {
   }, [window.ethereum]);
 
   useEffect(() => {
+    if (!window.ethereum) {
+      return;
+    }
     window.ethereum.on('chainChanged', (chainId) => {
       // Handle the new chain.
       // Correctly handling chain changes can be complicated.
@@ -615,7 +625,10 @@ const App = () => {
       getAllHacks();
       fetchVotes();
     } else {
-      setStatusToNewState('Not Connected');
+      let newState = metamaskMissing()
+        ? 'Metamask not detected'
+        : 'Not Connected';
+      setStatusToNewState(newState);
       setInvalidNetwork(!currentAccount || !connectedToRopsten());
       setStatusLoading(false);
       setDisabledVotes([]);
@@ -681,9 +694,9 @@ const App = () => {
         onStateChange={(state) => setMenuIsOpen(state.isOpen)}
       >
         <PostView
-          metamask={window.ethereum !== undefined}
+          metamask={window.ethereum && window.ethereum !== undefined}
           networkVersion={
-            window.ethereum !== undefined
+            window.ethereum && window.ethereum !== undefined
               ? window.ethereum.networkVersion
               : 'none'
           }
@@ -721,7 +734,9 @@ const App = () => {
       />
       <div className="banner">
         <div className="elementContainer">
-          {!connectedToRopsten() ? (
+          {metamaskMissing() ? (
+            <div className="whitehint">Install Metamask.</div>
+          ) : !connectedToRopsten() ? (
             <div className="whitehint">
               Switch your network to use Cityhacks.
             </div>
