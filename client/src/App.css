@@ -261,13 +261,19 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu-wrap {
   position: fixed;
   height: 100%;
-  padding-top: 0px !important;
+  margin-top: -12px;
   z-index: 100 !important;
+}
+
+@media only screen and (max-width: 500px) {
+  .bm-menu-wrap {
+    margin-top: -5px;
+  }
 }
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: #323235;
   padding: 2.5em 1.5em 0;
   font-size: 1.15em;
 }
