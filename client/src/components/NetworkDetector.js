@@ -15,7 +15,7 @@ const NetworkDetector = (props) => {
   return (
     <div className="footer-text">
       {!props.metamask
-        ? `Select a wallet provider. Some options may be available only with Metamask.`
+        ? `We only support Metamask at the moment. Sorry for the inconvenience.`
         : props.metamask &&
           props.networkVersion === expectedNetwork &&
           props.account &&

@@ -58,6 +58,7 @@ const PostView = (props) => {
             <Button
               className="connectWalletButton"
               onClick={props.connectWallet}
+              disabled={!props.metamask}
             >
               Connect Wallet
             </Button>
@@ -79,7 +80,7 @@ const PostView = (props) => {
               <Button
                 className="connectWalletButton"
                 onClick={props.openReportedView}
-                disabled={props.networkVersion !== '3'}
+                disabled={!props.metamask || props.networkVersion !== '3'}
               >
                 Check Reported Hacks
               </Button>
@@ -87,7 +88,7 @@ const PostView = (props) => {
             <Button
               className="connectWalletButton"
               onClick={props.openPostView}
-              disabled={props.networkVersion !== '3'}
+              disabled={!props.metamask || props.networkVersion !== '3'}
             >
               Post a hack
             </Button>

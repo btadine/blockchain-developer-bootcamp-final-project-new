@@ -80,12 +80,13 @@ const App = () => {
       network: 'ropsten',
       cacheProvider: true,
       providerOptions: {
-        walletconnect: {
-          package: WalletConnectProvider,
-          options: {
-            infuraId: process.env.REACT_APP_INFURA_ID,
-          },
-        },
+        // Disabled Wallet Connect until we have proper network detection and account handling.
+        // walletconnect: {
+        //   package: WalletConnectProvider,
+        //   options: {
+        //     infuraId: process.env.REACT_APP_INFURA_ID,
+        //   },
+        // },
       },
     });
     return web3Modal;
