@@ -735,9 +735,7 @@ const App = () => {
       <div className="banner">
         <div className="elementContainer">
           {metamaskMissing() ? (
-            <div className="whitehint">
-              Get Metamask or select another wallet provider.
-            </div>
+            <div className="whitehint">Select a wallet provider.</div>
           ) : !connectedToRopsten() ? (
             <div className="whitehint">
               Switch your network to use Cityhacks.
