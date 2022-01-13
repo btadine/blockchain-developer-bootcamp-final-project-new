@@ -7,7 +7,7 @@ When using low-level call methods, the contract handles the possibility that the
 The contract avoids re-entrancy hacks performing the required checks before any changes have been written to the contract. 
 There are no changes in logic until it is unavoidable to do them. Modifiers are only used for validation.
 
-### 3. Proper Use of require, assert and revert (SWC-110)
+### 3. Proper use of require, assert and revert (SWC-110)
 All the require calls are made to validate input. assert and revert are not used in the project.
 
 ### 4. Avoid authorization through tx.origin (SWC-115)
