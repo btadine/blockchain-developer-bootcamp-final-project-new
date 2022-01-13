@@ -737,16 +737,16 @@ const App = () => {
         <div className="elementContainer">
           <div className="leftSideContainer">
             {metamaskMissing() ? (
-              <div className="whitehint">Select a wallet provider.</div>
+              <div className="whitehint">Select a wallet provider</div>
             ) : !connectedToRopsten() ? (
               <div className="whitehint">
-                Switch your network to use Cityhacks.
+                Switch your network to use Cityhacks
               </div>
             ) : currentAccount && currentAccount.length > 0 ? (
-              <div className="whitehint">Tap on the menu to post a hack.</div>
+              <div className="whitehint">Tap on the menu to post a hack</div>
             ) : (
               <div className="whitehint">
-                Tap on the menu to connect your wallet.
+                Tap on the menu to connect your wallet
               </div>
             )}
           </div>
