@@ -734,22 +734,24 @@ const App = () => {
       />
       <div className="banner">
         <div className="elementContainer">
-          {metamaskMissing() ? (
-            <div className="whitehint">Select a wallet provider.</div>
-          ) : !connectedToRopsten() ? (
-            <div className="whitehint">
-              Switch your network to use Cityhacks.
-            </div>
-          ) : currentAccount && currentAccount.length > 0 ? (
-            <div className="whitehint">Tap on the menu to post a hack.</div>
-          ) : (
-            <div className="whitehint">
-              Tap on the menu to connect your wallet.
-            </div>
-          )}
+          <div className="leftSideContainer">
+            {metamaskMissing() ? (
+              <div className="whitehint">Select a wallet provider.</div>
+            ) : !connectedToRopsten() ? (
+              <div className="whitehint">
+                Switch your network to use Cityhacks.
+              </div>
+            ) : currentAccount && currentAccount.length > 0 ? (
+              <div className="whitehint">Tap on the menu to post a hack.</div>
+            ) : (
+              <div className="whitehint">
+                Tap on the menu to connect your wallet.
+              </div>
+            )}
+          </div>
         </div>
         <div className="elementContainer">
-          <div className="leftSideContainer">
+          <div className="rightSideContainer">
             <div className="statusTitle">Status:</div>
             <div className="statusName">
               <Loader
