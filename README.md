@@ -37,8 +37,15 @@ Coming soon:
 8. Block CityHack votes if a CityHack has been voted 10 times in less than 30 minutes. (Next iteration)
 
 ## Project Directory Structure
+Info Truffle/Hardhat can be used to deploy the smart contract. However, the tests are only present in Truffle.
+
 - The `./contracts` folder is where the main contract is located.
 - The `./migrations` folder contains the scripts for Truffle.
 - The `./test` folder contains the unit tests of the project.
+- The `./scripts` folder contains scripts to deploy with Hardhat.
+
+- The `./client` folder contains the front end of the project.
+
+
 
 
