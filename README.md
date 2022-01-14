@@ -1,12 +1,11 @@
 # blockchain-developer-bootcamp-final-project
 Final Project of Consensys Ethereum Bootcamp
 
-## Public Ethereum account for NFT Certificate
-
-0xE03A750EED6C6A38a30910fC6Ce1eF047bF8714b
-
 ## Deployed version URL
 https://cityhacks.vercel.app
+
+## Short walktrough video
+https://www.loom.com/share/c4e3543558cd455780571997736a40ad
 
 ## About this project
 
@@ -74,7 +73,8 @@ Truffle/Hardhat can be used to deploy the smart contract. However, the tests are
 - Open `http://localhost:3000`
 - Connect with Metamask. Switch network to `Localhost:8545`, chainId default 
 
-
+## Public Ethereum account for NFT Certificate
+0xE03A750EED6C6A38a30910fC6Ce1eF047bF8714b
 
 
 
