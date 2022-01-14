@@ -49,6 +49,8 @@ Coming soon:
 
 Truffle/Hardhat can be used to deploy the smart contract. However, the tests are prepared only for Truffle.
 
+## Installation
+
 ### Prerequisites
 
 - Node.js >= v14
