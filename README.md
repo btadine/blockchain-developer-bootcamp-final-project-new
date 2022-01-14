@@ -74,7 +74,7 @@ Truffle/Hardhat can be used to deploy the smart contract. However, the tests are
 - Open `http://localhost:3000`
 - Connect with Metamask. Switch network to `Localhost:8545`, chainId default
 
-## Server deployment
+## Public network deployment (Ropsten)
 
 #### Same as local deployment except:
 - truffle migrate should be run in `--network ropsten`
