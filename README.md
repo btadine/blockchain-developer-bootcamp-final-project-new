@@ -5,14 +5,14 @@ Final Project of Consensys Ethereum Bootcamp
 
 0xE03A750EED6C6A38a30910fC6Ce1eF047bF8714b
 
+## Deployed version URL
+https://cityhacks.vercel.app
+
 ## About this project
 
 This project borns from a personal need of reccomendations when I visit new cities I don't know yet. The problem is, when visiting a new city for pleasure or work, it's highly likely to end up in the most touristical places. In opposition, locals and reallocated persons know the cheapest place to take a good beer, the quieter spot in the city with amazing views, or the cofee place where you can work for free.
 
 This is where Cityhacks falls into place. Cityhacks is a categorized city-based suggestion feed owned by the community.
-
-## Deployed version URL
-https://cityhacks.vercel.app
 
 ## How CityHacks works?
 
