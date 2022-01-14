@@ -20,7 +20,8 @@ This is where Cityhacks falls into place. Cityhacks is a categorized city-based 
 5. Users can tip a CityHack creator for the suggestion as a way to thank him for the recommendation.
 
 Coming soon:
-11. Hex/ENS addresses of donors shown inside the suggestion (Next iteration).
+
+6. Hex/ENS addresses of donors shown inside the suggestion (Next iteration).
 
 ## The Rules
 1. Anyone who provides a city, a category and a non-empty description, can post a CityHack.
@@ -31,6 +32,7 @@ Coming soon:
 5. The admin can unreport reported CityHacks and/or hide them if they are inappropiate.
 
 Coming soon:
+
 6. Ban for addresses that practice spam. (Next iteration)
 7. Block CityHack votes if a CityHack has been voted 10 times in less than 30 minutes. (Next iteration)
 
