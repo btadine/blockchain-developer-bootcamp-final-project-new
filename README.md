@@ -36,4 +36,9 @@ Coming soon:
 6. Ban for addresses that practice spam. (Next iteration)
 7. Block CityHack votes if a CityHack has been voted 10 times in less than 30 minutes. (Next iteration)
 
+## Project Directory Structure
+- The `./contracts` folder is where the main contract is located.
+- The `./migrations` folder contains the scripts for Truffle.
+- The `./test` folder contains the unit tests of the project.
+
 
