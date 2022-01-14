@@ -55,18 +55,12 @@ const BrowseView = (props) => {
     setHackIdsVoted(props.votedHacks.map((votedHack) => votedHack.hackId));
     setHackIdsVotes(props.votedHacks.map((votedHack) => votedHack.vote));
     setHackCount(props.hacks ? props.hacks.length : 0);
-    console.log('arriving', props.votedHacks);
   }, [props.votedHacks]);
 
   useEffect(() => {
-    console.log('Hacks arrived', filtering);
     setLoading(props.hacks.length === 0 && !filtering);
     setFiltering(false);
   }, [props.hacks]);
-
-  useEffect(() => {
-    console.log(loading, filtering);
-  }, [loading]);
 
   const searchHacks = () => {
     let filters = {};

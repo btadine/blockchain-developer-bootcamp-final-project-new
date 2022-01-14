@@ -40,13 +40,8 @@ const PostHackPopup = (props) => {
   ];
 
   const postHack = async () => {
-    // setLoadingPost(true);
-    // setPostButtonTitle('Posting');
-    // console.log(textValue, cityId, categoryId);
     closePopup();
     await props.postHack(textValue, cityId, categoryId);
-    // setLoadingPost(false);
-    // setPostButtonTitle('Success');
     props.getAllHacks();
   };
 
@@ -55,17 +50,7 @@ const PostHackPopup = (props) => {
     setCityId(0);
     setCategoryId(0);
     props.closePopup();
-    //setPostButtonTitle('Post');
   };
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     if (!loadingPost) {
-  //       closePopup();
-  //     }
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // }, [postButtonTitle]);
 
   return (
     <Modal

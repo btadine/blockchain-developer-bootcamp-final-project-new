@@ -107,7 +107,6 @@ const App = () => {
       const { ethereum } = window;
 
       if (!ethereum) {
-        console.log('Make sure you have metamas)k!');
         return;
       } else {
         /*We have the ethereum object"*/
@@ -133,7 +132,6 @@ const App = () => {
         newProvider
       );
       const owner = await cityHacksContract.owner();
-      console.log('Owner', owner, account);
       setWalletIsOwner(owner.toLowerCase() == account.toLowerCase());
     } catch (error) {
       console.log(error);
@@ -141,45 +139,8 @@ const App = () => {
   };
 
   const connectWallet = async () => {
-    console.log('function called');
     await connect();
-    //try {
-    //const { ethereum } = window;
-
-    //if (!ethereum) {
-    //alert("Get MetaMask!");
-    //return;
-    //}
-
-    //const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-
-    /* Wallet Connected*/
-    //setCurrentAccount(accounts[0]);
-    //} catch (error) {
-    //  console.log(error)
-    //}
   };
-
-  // const getReportedHacks = async () => {
-  //   try {
-  //     const signer = provider.getSigner();
-  //     const cityHacksContract = new ethers.Contract(
-  //       contractAddress,
-  //       contractABI,
-  //       signer
-  //     );
-  //     const owner = await cityHacksContract.owner();
-  //     console.log('Contract owner is', owner);
-  //     let hacksIds = await cityHacksContract.getReportedHacks();
-  //     hacksIds = hacksIds.map((bigNumber) => bigNumber.toNumber());
-  //     console.log(hacksIds);
-  //     const hacks = allHacks.filter((a) => hacksIds.includes(a.id));
-  //     console.log(hacks);
-  //     setReportedHacks(hacks);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const getAllHacks = async () => {
     try {
@@ -219,13 +180,10 @@ const App = () => {
         hacksFiltered = hacksCleaned.filter(
           (a) => a.city === filters.city && a.category === filters.category
         );
-        console.log('found city and category', hacksFiltered);
       } else if (filters.city) {
         hacksFiltered = hacksCleaned.filter((a) => a.city === filters.city);
-        console.log('found city', hacksFiltered);
       } else {
         hacksFiltered = hacksCleaned;
-        console.log('not found filters', hacksFiltered);
       }
       const hacksSorted = hacksFiltered.sort(
         (a, b) => b.upvotes - b.downvotes - (a.upvotes - a.downvotes)
@@ -281,9 +239,7 @@ const App = () => {
       setStatusLoading(true);
       setConnectionStatus('Fetching');
       const reported = await getAllReportedHacks(account);
-      console.log(reported);
       const hacks = allHacks.filter((a) => reported.includes(a.id));
-      console.log(hacks);
       if (hacks.length === 0) {
         setNoReportedHacks(true);
       }
@@ -319,7 +275,6 @@ const App = () => {
         const vote = event.args[2];
         const timestamp = event.args[3].toNumber();
         const voteObject = { hackId: hackId, vote: vote, timestamp: timestamp };
-        console.log(voteObject);
         if (!voteIds.includes(hackId)) {
           votes.push(voteObject);
           voteIds.push(hackId);
@@ -331,7 +286,6 @@ const App = () => {
               : votes[index];
         }
       });
-      console.log('votedHacks', votes);
       setVotedHacks(votes);
     } catch (error) {
       console.log(error);
@@ -350,7 +304,6 @@ const App = () => {
       );
 
       reported = reported.filter((e) => e != hackId);
-      console.log('Unreported', reported, 'hackId:', hackId);
 
       const reportHackTxn = await cityHacksContract.unreportHack(
         hackId,
@@ -412,8 +365,6 @@ const App = () => {
       );
 
       reported.push(hackId);
-
-      console.log('HEYYYY', hackId, reported);
 
       const reportHackTxn = await cityHacksContract.reportHack(
         hackId,
@@ -499,7 +450,6 @@ const App = () => {
         contractABI,
         signer
       );
-      console.log(tipValue);
       let overrides = { value: ethers.utils.parseEther(tipValue.toString()) };
 
       const hackTxn = await cityHacksContract.tipHacker(hackId, overrides);
@@ -533,7 +483,6 @@ const App = () => {
   };
 
   const tipHack = (tipAmount) => {
-    console.log('tip hack called');
     setTipHackPressed(false);
     tipHacker(tipAmount);
   };
@@ -560,11 +509,9 @@ const App = () => {
   const handleAccountsChanged = async (accounts) => {
     const account = accounts[0];
     setCurrentAccount(account);
-    console.log('handleAccountsChanged', account);
     configWalletIsOwner(account);
     if (accounts.length === 0) {
       const web3Modal = await getWeb3Modal();
-      //console.log(web3Modal);
       web3Modal.clearCachedProvider();
       setCurrentAccount('');
     }
@@ -584,7 +531,6 @@ const App = () => {
       : 'Switch to Ropsten Network';
     setConnectionStatus(conectionStatus);
     setStatusLoading(connectedToRopsten() ? false : true);
-    console.log('this', currentAccount && currentAccount.length === 0);
     setInvalidNetwork(!currentAccount || !connectedToRopsten());
   };
 
@@ -668,18 +614,14 @@ const App = () => {
   };
 
   const openPopup = () => {
-    console.log('opening popup');
     setOpenPostPopup(true);
   };
 
   const closePopup = () => {
-    console.log('closing popup');
     setOpenPostPopup(false);
   };
 
   const openReported = async () => {
-    console.log('opening reported');
-    console.log(await provider.listAccounts());
     getAndSetReportedHacks();
   };
 
@@ -785,7 +727,6 @@ const App = () => {
                 <button
                   className="button"
                   onClick={() => {
-                    console.log('modal closed ');
                     close();
                   }}
                 >
