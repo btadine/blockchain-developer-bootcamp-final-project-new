@@ -11,7 +11,7 @@ This project borns from a personal need of reccomendations when I visit new citi
 
 This is where Cityhacks falls into place. Cityhacks is a categorized city-based suggestion feed owned by the community.
 
-## How CityHacks work?
+## How CityHacks works?
 
 1. A user creates a new suggestion (AKA "CityHack") indicating a city and a category.
 2. A user can upvote or downvote a suggestion.
