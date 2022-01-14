@@ -67,12 +67,12 @@ Truffle/Hardhat can be used to deploy the smart contract. However, the tests are
 ### Frontend
 - Navigate to `client/src/utils` and open `Constants.js`
 - Change variable `LOCAL_DEPLOYMENT` value to `true`
-- Network id for localhost is 5777 (can be changed)
+- Network id for localhost is `5777` (can be changed)
 - `cd client`
 - `yarn install`
 - `yarn start`
 - Open `http://localhost:3000`
-- Connect with Metamask. Switch network to Localhost:8545, chainId default 
+- Connect with Metamask. Switch network to `Localhost:8545`, chainId default 
 
 
 
