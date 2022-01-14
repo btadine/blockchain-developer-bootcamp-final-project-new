@@ -72,7 +72,14 @@ Truffle/Hardhat can be used to deploy the smart contract. However, the tests are
 - `yarn install`
 - `yarn start`
 - Open `http://localhost:3000`
-- Connect with Metamask. Switch network to `Localhost:8545`, chainId default 
+- Connect with Metamask. Switch network to `Localhost:8545`, chainId default
+
+## Server deployment
+
+#### Same as local deployment except:
+- truffle migrate should be run in `--network ropsten`
+- No need to change Constants.js
+- `.env` file should include as well the parameter `REACT_APP_ALCHEMY_KEY` with a valid Alchemy API key
 
 ## Public Ethereum account for NFT Certificate
 0xE03A750EED6C6A38a30910fC6Ce1eF047bF8714b
