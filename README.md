@@ -1,29 +1,39 @@
 # blockchain-developer-bootcamp-final-project
 Final Project of Consensys Ethereum Bootcamp
 
-## Cityhacks: A decentralized city-based suggestion feed 
+## Public Ethereum account for NFT Certificate
 
-### The Problem
+0xE03A750EED6C6A38a30910fC6Ce1eF047bF8714b
 
-When visiting a new city for pleasure or work, it's highly likely to end up in the most touristical places. Even if staying longer, most people need a phase of adaptation where they find where the good things happen or are located. The average person is likely to reproduce a very touristic trip in a span of a few days, not enjoying the good things only local people are aware of. In opposition, locals and reallocated persons know the cheapest place to take a good beer, the quieter spot in the city with amazing views, or the cofee place where you can work for free.
+## About this project
 
-### The Solution
+This project borns from a personal need of reccomendations when I visit new cities I don't know yet. The problem is, when visiting a new city for pleasure or work, it's highly likely to end up in the most touristical places. In opposition, locals and reallocated persons know the cheapest place to take a good beer, the quieter spot in the city with amazing views, or the cofee place where you can work for free.
 
-A decentralized city-based suggestion feed including different categories (ie. cheap/nice spot/traditional/parking/coworking).
+This is where Cityhacks falls into place. Cityhacks is a categorized city-based suggestion feed owned by the community.
 
-### The Workflow
+## How CityHacks work?
 
-1. A user creates a new suggestion (AKA "City hack") indicating a city and a category.
-2. When posted, the suggestion leads to a transaction with the smart contract where the suggestion id is stored. The model is stored in IPFS.
-3. Each time a new suggestion is created, an event is emitted.
-4. The frontend filters suggestions analyzing all the events to date emitted by the SC. The suggestions feed is refreshed with the new suggestion. 
-5. A user can upvote or downvote a suggestion, which costs gas as a way to prevent spam.
-6. A user can tip a poster to the original address used for the suggestion creation.
-7. When a tip is made, an event with the address of the donator is emitted.
-8. Hex/ENS addresses of donors are shown inside of the suggestion.
+1. A user creates a new suggestion (AKA "CityHack") indicating a city and a category.
+2. A user can upvote or downvote a suggestion.
+3. Suggestions are reordered based on upvotes and downvotes.
+4. Users can report inappropiate content, which is removed if validated.
+5. Users can tip a CityHack creator for the suggestion as a way to thank him for the recommendation.
 
-### The Rules
+Coming soon:
+
+6. Hex/ENS addresses of donors shown inside the suggestion (Next iteration).
+
+## The Rules
+1. Anyone who provides a city, a category and a non-empty description, can post a CityHack.
 1. The original poster address can't vote his own suggestion.
-2. The same address can't vote twice for a suggestion.
+2. The same address can't vote twice the same for a given suggestion, and has only one vote in every suggestion
+3. Votes for a suggestion can be changed but not withdrawn.
+4. Innapropiate CityHack's can be reported.
+5. The admin can unreport reported CityHacks and/or hide them if they are inappropiate.
+
+Coming soon:
+
+6. Ban for addresses that practice spam. (Next iteration)
+7. Block CityHack votes if a CityHack has been voted 10 times in less than 30 minutes. (Next iteration)
 
 
