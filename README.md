@@ -9,7 +9,7 @@ When visiting a new city for pleasure or work, it's highly likely to end up in t
 
 ### The Solution
 
-A decentralized city-based suggestion feed including different categories (ie. cheap/nice spot/traditional/parking/coworking).
+A decentralized city-based suggestion feed by category (ie. cheap/nice spot/traditional/parking/coworking).
 
 ### User Workflow
 
