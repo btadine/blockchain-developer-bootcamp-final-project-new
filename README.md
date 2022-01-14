@@ -25,16 +25,16 @@ Coming soon:
 
 ### Limitations when using CityHacks
 1. Anyone who provides a city, a category and a non-empty description, can post a CityHack.
-1. The original poster address can't vote his own suggestion.
-2. The same address can't vote twice the same for a given suggestion, and has only one vote in every suggestion
-3. Votes for a suggestion can be changed but not withdrawn.
-4. Innapropiate CityHack's can be reported.
-5. The admin can unreport reported CityHacks and/or hide them if they are inappropiate.
+2. The original poster address can't vote his own suggestion.
+3. The same address can't vote twice the same for a given suggestion, and has only one vote in every suggestion
+4. Votes for a suggestion can be changed but not withdrawn.
+5. Innapropiate CityHack's can be reported.
+6. The admin can unreport reported CityHacks and/or hide them if they are inappropiate.
 
 Coming soon:
 
-6. Ban for addresses that practice spam. (Next iteration)
-7. Block CityHack votes if a CityHack has been voted 10 times in less than 30 minutes. (Next iteration)
+7. Ban for addresses that practice spam. (Next iteration)
+8. Block CityHack votes if a CityHack has been voted 10 times in less than 30 minutes. (Next iteration)
 
 ## Project Directory Structure
 - The `./contracts` folder is where the main contract is located.
