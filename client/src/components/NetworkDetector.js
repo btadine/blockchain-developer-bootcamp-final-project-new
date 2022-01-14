@@ -1,4 +1,5 @@
 import React from 'react';
+import { NETWORK_VERSION } from '../utils/Constants.js';
 import './NetworkDetector.css';
 const NetworkDetector = (props) => {
   const NETWORKS = {
@@ -7,9 +8,10 @@ const NetworkDetector = (props) => {
     3: 'Ropsten Testnet',
     4: 'Rinkeby Testnet',
     5: 'Goerli Testnet',
+    5777: 'Localhost',
   };
 
-  const expectedNetwork = `3`;
+  const expectedNetwork = NETWORK_VERSION;
 
   return (
     <div className="footer-text">
@@ -21,7 +23,7 @@ const NetworkDetector = (props) => {
           props.account.length > 0
         ? `Post a hack (on ${NETWORKS[props.networkVersion]})`
         : props.networkVersion !== expectedNetwork
-        ? `This only works on ${NETWORKS[3]}, please change your Network and refresh the page.`
+        ? `This only works on ${NETWORKS[NETWORK_VERSION]}, please change your Network and refresh the page.`
         : `You're not connected.`}
     </div>
   );

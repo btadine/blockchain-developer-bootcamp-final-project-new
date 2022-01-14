@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 
 //import { FormControl, FormSelect, Button, InputGroup } from 'react-bootstrap';
 import NetworkDetector from './NetworkDetector.js';
+import { NETWORK_VERSION } from '../utils/Constants.js';
 
 const PostView = (props) => {
   return (
@@ -31,7 +32,7 @@ const PostView = (props) => {
       ) : (
         <div className="postHackContainer">
           <div className="connected">
-            {props.networkVersion !== '3'
+            {props.networkVersion !== NETWORK_VERSION
               ? 'Invalid Network'
               : props.isOwner
               ? 'Welcome, Admin'
@@ -44,7 +45,9 @@ const PostView = (props) => {
               <Button
                 className="connectWalletButton"
                 onClick={props.openReportedView}
-                disabled={!props.metamask || props.networkVersion !== '3'}
+                disabled={
+                  !props.metamask || props.networkVersion !== NETWORK_VERSION
+                }
               >
                 Check Reported Hacks
               </Button>
@@ -52,7 +55,9 @@ const PostView = (props) => {
             <Button
               className="connectWalletButton"
               onClick={props.openPostView}
-              disabled={!props.metamask || props.networkVersion !== '3'}
+              disabled={
+                !props.metamask || props.networkVersion !== NETWORK_VERSION
+              }
             >
               Post a hack
             </Button>

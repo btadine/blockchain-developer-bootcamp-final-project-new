@@ -9,10 +9,10 @@ contract('CityHacks', function (accounts) {
     instance = await CityHacks.new();
   });
 
-  it('ready to be solved!', async () => {
-    const eth100 = 100e18;
-    assert.equal(await web3.eth.getBalance(alice), eth100.toString());
-  });
+  // it('ready to be solved!', async () => {
+  //   const eth100 = 100e18;
+  //   assert.equal(await web3.eth.getBalance(alice), eth100.toString());
+  // });
 
   it('is owned by owner', async () => {
     assert.equal(
@@ -57,7 +57,7 @@ contract('CityHacks', function (accounts) {
 
     const expectedEventResult = {
       address: alice,
-      hackId: 1,
+      hackId: 0,
       hackDescription: 'test',
     };
 
@@ -66,6 +66,7 @@ contract('CityHacks', function (accounts) {
       address,
       'NewHack event from property not emitted, check PostHack method'
     );
+    console.log(expectedEventResult.hackId, hackId);
     assert.equal(
       expectedEventResult.hackId,
       hackId,

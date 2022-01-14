@@ -17,6 +17,8 @@ import Loader from 'react-loader-spinner';
 
 import { slide as Menu } from 'react-burger-menu';
 
+import { LOCAL_DEPLOYMENT, NETWORK_VERSION } from './utils/Constants.js';
+
 import 'reactjs-popup/dist/index.css';
 import './App.css';
 
@@ -119,10 +121,9 @@ const App = () => {
 
   const configWalletIsOwner = async (account) => {
     try {
-      const newProvider = new ethers.providers.AlchemyProvider(
-        'ropsten',
-        alchemyKey
-      );
+      const newProvider = true
+        ? new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
+        : new ethers.providers.AlchemyProvider('ropsten', alchemyKey);
       const cityHacksContract = new ethers.Contract(
         contractAddress,
         contractABI,
@@ -141,15 +142,15 @@ const App = () => {
 
   const getAllHacks = async () => {
     try {
-      const newProvider = new ethers.providers.AlchemyProvider(
-        'ropsten',
-        alchemyKey
-      );
+      const newProvider = true
+        ? new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
+        : new ethers.providers.AlchemyProvider('ropsten', alchemyKey);
       const cityHacksContract = new ethers.Contract(
         contractAddress,
         contractABI,
         newProvider
       );
+      console.log('contract address', contractAddress);
 
       const hacks = await cityHacksContract.getAllHacks();
 
@@ -187,6 +188,7 @@ const App = () => {
       );
       setAllHacks(hacksSorted);
     } catch (error) {
+      console.log(contractAddress);
       console.log(error);
     }
   };
@@ -247,10 +249,9 @@ const App = () => {
 
   const getAllVotes = async (account) => {
     try {
-      const newProvider = new ethers.providers.AlchemyProvider(
-        'ropsten',
-        alchemyKey
-      );
+      const newProvider = true
+        ? new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
+        : new ethers.providers.AlchemyProvider('ropsten', alchemyKey);
 
       let ens = new ethers.Contract(contractAddress, contractABI, newProvider);
 
@@ -510,7 +511,9 @@ const App = () => {
   };
 
   const connectedToRopsten = () => {
-    return window.ethereum && window.ethereum.networkVersion === '3';
+    return (
+      window.ethereum && window.ethereum.networkVersion === NETWORK_VERSION
+    );
   };
 
   const metamaskMissing = () => {
