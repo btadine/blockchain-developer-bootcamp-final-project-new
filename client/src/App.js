@@ -246,8 +246,8 @@ const App = () => {
       const signer = provider.getSigner();
       const ens = new ethers.Contract(contractAddress, contractABI, signer);
 
-      let latestBlockReport = await ens.getLatestReportBlock();
-      latestBlockReport = latestBlockReport.toNumber();
+      let latestReportNumber = await ens.getLatestReportNumber();
+      latestReportNumber = latestReportNumber.toNumber();
 
       //let ens = new ethers.Contract(contractAddress, contractABI, newProvider);
 
@@ -256,7 +256,7 @@ const App = () => {
           null,
           null,
           null,
-          latestBlockReport,
+          latestReportNumber,
           null,
           null
         ),
