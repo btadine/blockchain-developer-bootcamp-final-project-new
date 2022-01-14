@@ -78,7 +78,7 @@ Truffle/Hardhat can be used to deploy the smart contract. However, the tests are
 
 #### Same as local deployment except:
 - truffle migrate should be run in `--network ropsten`
-- No need to change Constants.js
+- No need to change `Constants.js`
 - `.env` file should include as well the parameter `REACT_APP_ALCHEMY_KEY` with a valid Alchemy API key
 
 ## Public Ethereum account for NFT Certificate
