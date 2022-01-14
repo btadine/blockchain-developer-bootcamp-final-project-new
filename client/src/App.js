@@ -121,7 +121,7 @@ const App = () => {
 
   const configWalletIsOwner = async (account) => {
     try {
-      const newProvider = true
+      const newProvider = LOCAL_DEPLOYMENT
         ? new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
         : new ethers.providers.AlchemyProvider('ropsten', alchemyKey);
       const cityHacksContract = new ethers.Contract(
@@ -142,7 +142,7 @@ const App = () => {
 
   const getAllHacks = async () => {
     try {
-      const newProvider = true
+      const newProvider = LOCAL_DEPLOYMENT
         ? new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
         : new ethers.providers.AlchemyProvider('ropsten', alchemyKey);
       const cityHacksContract = new ethers.Contract(
@@ -249,7 +249,7 @@ const App = () => {
 
   const getAllVotes = async (account) => {
     try {
-      const newProvider = true
+      const newProvider = LOCAL_DEPLOYMENT
         ? new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545')
         : new ethers.providers.AlchemyProvider('ropsten', alchemyKey);
 
