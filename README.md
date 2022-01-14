@@ -64,9 +64,10 @@ Truffle/Hardhat can be used to deploy the smart contract. However, the tests are
 - Run tests in Truffle console: `test`
 
 ### Frontend
+- Navigate to `client` and create a new `.env` file with the key `REACT_APP_CONTRACT_ADDRESS=` indicating the address of the contract
 - Navigate to `client/src/utils` and open `Constants.js`
 - Change variable `LOCAL_DEPLOYMENT` value to `true`
-- Network id for localhost is `5777` (can be changed)
+- NOTE: Network id for localhost is `5777` (can be changed)
 - `cd client`
 - `yarn install`
 - `yarn start`
