@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Poll.css';
 
 import 'antd/dist/antd.css';

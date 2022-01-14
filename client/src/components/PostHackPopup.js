@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import 'antd/dist/antd.css';
 
@@ -10,8 +10,6 @@ const PostHackPopup = (props) => {
   const [textValue, setTextValue] = useState('');
   const [cityId, setCityId] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
-  // const [loadingPost, setLoadingPost] = useState(false);
-  const [postButtonTitle, setPostButtonTitle] = useState('Post');
 
   const cities = [
     'Select a City',
@@ -64,7 +62,7 @@ const PostHackPopup = (props) => {
           Cancel
         </Button>,
         <Button key="submit" type="primary" onClick={postHack}>
-          {postButtonTitle}
+          Post
         </Button>,
       ]}
     >

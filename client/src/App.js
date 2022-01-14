@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+//import WalletConnectProvider from '@walletconnect/web3-provider';
 import abi from './utils/CityHacks.json';
 
 import Popup from 'reactjs-popup';
 import Moment from 'moment';
-import TabComponent from './components/Tabs.js';
 import PostView from './components/PostView.js';
 import BrowseView from './components/BrowseView.js';
 import PostHackPopup from './components/PostHackPopup.js';
@@ -27,7 +26,6 @@ const App = () => {
   const [allHacks, setAllHacks] = useState([]);
   const [reportedHacks, setReportedHacks] = useState([]);
   const [currentAccount, setCurrentAccount] = useState('');
-  const [connection, setConnection] = useState(false);
   const [provider, setProvider] = useState({});
 
   const [errorOcurred, setErrorOcurred] = useState(false);
@@ -97,7 +95,6 @@ const App = () => {
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const accounts = await provider.listAccounts();
-    setConnection(connection);
     setProvider(provider);
     setCurrentAccount(accounts[0]);
   }
@@ -132,7 +129,7 @@ const App = () => {
         newProvider
       );
       const owner = await cityHacksContract.owner();
-      setWalletIsOwner(owner.toLowerCase() == account.toLowerCase());
+      setWalletIsOwner(owner.toLowerCase() === account.toLowerCase());
     } catch (error) {
       console.log(error);
     }
@@ -196,11 +193,6 @@ const App = () => {
 
   const getAllReportedHacks = async (account) => {
     try {
-      const newProvider = new ethers.providers.AlchemyProvider(
-        'ropsten',
-        alchemyKey
-      );
-
       const signer = provider.getSigner();
       const ens = new ethers.Contract(contractAddress, contractABI, signer);
 
@@ -303,7 +295,7 @@ const App = () => {
         signer
       );
 
-      reported = reported.filter((e) => e != hackId);
+      reported = reported.filter((e) => e !== hackId);
 
       const reportHackTxn = await cityHacksContract.unreportHack(
         hackId,
@@ -334,7 +326,7 @@ const App = () => {
         signer
       );
 
-      reported = reported.filter((e) => e != hackId);
+      reported = reported.filter((e) => e !== hackId);
 
       const hideHackTxn = await cityHacksContract.hideAndUnreportHack(
         hackId,
@@ -543,6 +535,7 @@ const App = () => {
     return () => {
       window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.ethereum]);
 
   useEffect(() => {
@@ -559,11 +552,13 @@ const App = () => {
     return () => {
       window.ethereum.removeListener('chainChanged');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.ethereum]);
 
   useEffect(() => {
     getAllHacks();
     checkIfWalletIsConnected();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -582,27 +577,25 @@ const App = () => {
       setVotedHacks([]);
     }
     configWalletIsOwner(currentAccount);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAccount]);
 
   let timeOut;
 
   useEffect(() => {
     if (connectionStatus === 'Mined!') {
+      // eslint-disable-next-line
       timeOut = setTimeout(() => setConnectionBaseState(), 3000);
     }
     return () => {
       clearTimeout(timeOut);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectionStatus]);
-
-  // useEffect(() => {
-  //   if (shouldGoToPreviousState) {
-  //     setConnectionStatus(connectionPreviousState);
-  //   }
-  // }, [shouldGoToPreviousState]);
 
   useEffect(() => {
     getAllHacks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   useEffect(() => {

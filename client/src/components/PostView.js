@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './PostView.css';
 import { Button } from 'antd';
 import 'antd/dist/antd.css';
@@ -7,42 +7,6 @@ import 'antd/dist/antd.css';
 import NetworkDetector from './NetworkDetector.js';
 
 const PostView = (props) => {
-  const [textValue, setTextValue] = useState('');
-  const [cityId, setCityId] = useState(0);
-  const [categoryId, setCategoryId] = useState(0);
-
-  const cities = [
-    'Choose a city',
-    'Barcelona',
-    'Buenos Aires',
-    'Lisboa',
-    'Madrid',
-    'London',
-    'Tokyo',
-    'New York',
-    'San Francisco',
-    'Berlin',
-    'Paris',
-    'Rome',
-    'Athens',
-  ];
-
-  const categories = [
-    'Choose a category',
-    'Cheap',
-    'Nice Spot',
-    'Traditional',
-    'Parking',
-    'Coworking',
-    'Misc',
-  ];
-
-  const handleClick = async (event) => {
-    await props.postHack(textValue, cityId, categoryId);
-    setTextValue('');
-    props.getAllHacks();
-  };
-
   return (
     <div className="postView">
       {props.accountNotFound ? (

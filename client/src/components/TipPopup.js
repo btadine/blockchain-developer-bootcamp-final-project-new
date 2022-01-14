@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import 'antd/dist/antd.css';
 
 import './TipPopup.css';
 
-import { Form, InputNumber, Button, Select, Modal } from 'antd';
+import { Form, InputNumber, Button, Modal } from 'antd';
 
 const TipPopup = (props) => {
   const [tipAmount, setTipAmount] = useState(0.001);

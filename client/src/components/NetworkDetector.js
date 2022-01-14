@@ -1,4 +1,3 @@
-import { getAccountPath } from 'ethers/lib/utils';
 import React from 'react';
 import './NetworkDetector.css';
 const NetworkDetector = (props) => {

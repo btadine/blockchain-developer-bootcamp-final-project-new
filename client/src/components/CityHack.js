@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import './CityHack.css';
 import Poll from './Poll.js';
-import { Form, Input, Button, Select } from 'antd';
+import { Button } from 'antd';
 
 const CityHack = (props) => {
   return (
@@ -32,6 +32,7 @@ const CityHack = (props) => {
         <a
           href={'https://ropsten.etherscan.io/address/' + props.hack.address}
           target="_blank"
+          rel="noopener noreferrer"
         >
           {props.hack.address}
         </a>

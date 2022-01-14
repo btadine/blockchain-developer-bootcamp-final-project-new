@@ -7,7 +7,7 @@ import 'antd/dist/antd.css';
 
 import CityHack from './CityHack.js';
 
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Button, Select } from 'antd';
 
 const BrowseView = (props) => {
   const [hackIdsVoted, setHackIdsVoted] = useState([]);
@@ -15,7 +15,6 @@ const BrowseView = (props) => {
   const [cityId, setCityId] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [hackCount, setHackCount] = useState(0);
   const [filtering, setFiltering] = useState(false);
 
   const cities = [
@@ -46,7 +45,6 @@ const BrowseView = (props) => {
 
   const handleVote = async (vote, hackId) => {
     await props.voteHack(hackId, vote);
-    setHackCount(0);
     await props.getAllHacks();
     props.fetchEvents();
   };
@@ -54,12 +52,12 @@ const BrowseView = (props) => {
   useEffect(() => {
     setHackIdsVoted(props.votedHacks.map((votedHack) => votedHack.hackId));
     setHackIdsVotes(props.votedHacks.map((votedHack) => votedHack.vote));
-    setHackCount(props.hacks ? props.hacks.length : 0);
   }, [props.votedHacks]);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setLoading(props.hacks.length === 0 && !filtering);
     setFiltering(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.hacks]);
 
   const searchHacks = () => {
@@ -73,15 +71,15 @@ const BrowseView = (props) => {
     setFiltering(true);
     props.setFilters(filters);
   };
-  const functions = () => {
-    //<Form>
-    //<Form.Item label="Input">
-    //<Input />
-    //</Form.Item>
-    //<Form.Item label="Select">
-    //<Select>
-    //<Select.Option value="demo">Demo</Select.Option>
-    //</Select>
+
+  const getCategoryAndCityRecommendationsTitle = () => {
+    // eslint-disable-next-line
+    return `${categories[categoryId]}` + ' in ' + `${cities[cityId]}`;
+  };
+
+  const getCityRecommendationsTitle = () => {
+    // eslint-disable-next-line
+    return 'Latest recommendations in ' + `${cities[cityId]}`;
   };
 
   return (
@@ -145,10 +143,10 @@ const BrowseView = (props) => {
             <div className="headerContainer">
               <h3 className="headerTitle">
                 {categoryId !== 0 && props.hacks.length > 0
-                  ? `${categories[categoryId]}` + ' in ' + `${cities[cityId]}`
+                  ? getCategoryAndCityRecommendationsTitle()
                   : props.hacks.length === 0
                   ? ''
-                  : 'Latest recommendations in ' + `${cities[cityId]}`}
+                  : getCityRecommendationsTitle()}
               </h3>
             </div>
             {props.hacks.length === 0 && (
