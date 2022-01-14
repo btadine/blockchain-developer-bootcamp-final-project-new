@@ -59,17 +59,21 @@ Truffle/Hardhat can be used to deploy the smart contract. However, the tests are
 ### Contracts
 
 - Run `npm install` in project root to install Truffle build and smart contract dependencies
-- Run local testnet in port `7545` with an Ethereum client, e.g. Ganache
+- Run local testnet in port `8545` with an Ethereum client, e.g. Ganache
 - `truffle migrate --network development`
 - `truffle console --network development`
 - Run tests in Truffle console: `test`
 
 ### Frontend
-
+- Navigate to `client/src/utils` and open `Constants.js`
+- Change variable `LOCAL_DEPLOYMENT` value to `true`
+- Network id for localhost is 5777 (can be changed)
 - `cd client`
 - `npm install`
 - `npm start`
 - Open `http://localhost:3000`
+- Connect with Metamask. Switch network to Localhost:8545, chainId default 
+
 
 
 
