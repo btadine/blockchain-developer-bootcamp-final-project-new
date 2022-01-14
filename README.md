@@ -23,7 +23,7 @@ Coming soon:
 
 6. Hex/ENS addresses of donors shown inside the suggestion (Next iteration).
 
-## Limitations when using CityHacks
+### Limitations when using CityHacks
 1. Anyone who provides a city, a category and a non-empty description, can post a CityHack.
 1. The original poster address can't vote his own suggestion.
 2. The same address can't vote twice the same for a given suggestion, and has only one vote in every suggestion
